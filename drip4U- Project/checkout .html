@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Checkout</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2 style="text-align:center;margin-top:40px">Checkout Details</h2>
+<div style="width:350px;margin:auto;margin-top:25px;text-align:center;">
+<input type="text" placeholder="Full Name" style="padding:10px;width:100%;margin-bottom:10px">
+<input type="text" placeholder="Address" style="padding:10px;width:100%;margin-bottom:10px">
+<input type="number" placeholder="Mobile" style="padding:10px;width:100%;margin-bottom:10px">
+<button class="btn" onclick="done()">Place Order ✔</button>
+</div>
+
+<script>
+function done(){localStorage.removeItem("cart");alert("Order Placed Successfully! ❤️");location.href="index.html";}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Checkout & Payment</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.checkout-box{
+  width:400px;background:#fff;padding:20px;margin:auto;margin-top:40px;
+  border-radius:10px;border:1px solid #ddd;
+}
+.checkout-box input,select{
+  width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:6px;
+}
+.pay-option{margin-top:15px;font-size:18px;font-weight:600;color:#d0492c;}
+.payBtn{
+  width:100%;padding:12px;background:#d0492c;color:#fff;border:none;
+  font-size:16px;border-radius:6px;cursor:pointer;margin-top:10px;
+}
+.payBtn:hover{background:#b3351b}
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center;margin-top:30px;">Checkout & Payment</h2>
+
+<div class="checkout-box">
+
+  <h3>Customer Details</h3>
+  <input type="text" id="name" placeholder="Full Name">
+  <input type="text" id="address" placeholder="Address">
+  <input type="number" id="mobile" placeholder="Mobile Number">
+
+  <h3 class="pay-option">Select Payment Method</h3>
+
+  <select id="paymentMode">
+    <option value="COD">Cash On Delivery</option>
+    <option value="UPI">UPI Payment</option>
+    <option value="CARD">Debit / Credit Card</option>
+  </select>
+
+  <div id="extraFields"></div>
+
+  <button class="payBtn" onclick="placeOrder()">Confirm & Pay ✔</button>
+
+</div>
+
+<script>
+function placeOrder(){
+    let name=document.getElementById("name").value;
+    let address=document.getElementById("address").value;
+    let mobile=document.getElementById("mobile").value;
+    let pay=document.getElementById("paymentMode").value;
+
+    if(!name || !address || !mobile){
+        alert("Fill all details first!");
+        return;
+    }
+
+    if(pay=="UPI"){
+       alert("Open UPI app & complete payment.");
+    }
+    if(pay=="CARD"){
+       alert("Your card is being processed...");
+    }
+
+    localStorage.removeItem("cart");
+    alert("Payment Successful! ❤️ Order Confirmed.");
+    location.href="index.html";
+}
+
+// Payment input UI change
+document.getElementById("paymentMode").addEventListener("change",(e)=>{
+  let mode=e.target.value;
+  let field=document.getElementById("extraFields");
+
+  if(mode=="UPI"){
+    field.innerHTML=`<input placeholder="Enter UPI ID (e.g. abc@upi)">`;
+  }
+  else if(mode=="CARD"){
+    field.innerHTML=`
+      <input placeholder="Card Number">
+      <input placeholder="Expiry (MM/YY)">
+      <input placeholder="CVV">
+    `;
+  }
+  else field.innerHTML="";
+})
+</script>
+
+</body>
+</html>

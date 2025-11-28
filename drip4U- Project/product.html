@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Product Details</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.wrapper{width:85%;margin:60px auto;display:flex;gap:40px;}
+#mainImg{width:420px;height:420px;border-radius:10px;object-fit:cover}
+.thumbs img{width:80px;height:80px;margin-top:12px;border-radius:6px;cursor:pointer;border:2px solid transparent}
+.thumbs img:hover{border-color:#d0492c}
+.pBox h2{font-size:28px;margin-bottom:10px}
+.pBox .price{font-size:26px;color:#d0492c;font-weight:bold}
+.buy,.cart{padding:12px 22px;border:none;border-radius:6px;font-size:17px;cursor:pointer;margin-right:12px}
+.buy{background:#d0492c;color:white}.buy:hover{background:#b2341a}
+.cart{background:#111;color:white}.cart:hover{background:#000}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+ <div>
+   <img id="mainImg">
+   <div class="thumbs" id="thumbs"></div>
+ </div>
+
+ <div class="pBox">
+   <h2 id="pName"></h2>
+   <p class="price" id="pPrice"></p>
+   <p>Unique thrift piece ♻ Eco-friendly. Limited Stock Only.</p>
+
+   <button class="cart" onclick="addCart()">Add to Cart 🛒</button>
+   <button class="buy" onclick="buyNow()">Buy Now ⚡</button>
+ </div>
+</div>
+
+<script src="script.js"></script>
+
+<script >
+let id=localStorage.getItem("selected");
+let product = JSON.parse(localStorage.getItem("productData"))?.find(p=>p.id==id)
+            || window.products?.find(p=>p.id==id)
+            || (function(){localStorage.setItem('productData',JSON.stringify(products));return products.find(p=>p.id==id)})();
+
+/* SET DATA */
+document.getElementById("mainImg").src = product.img;
+document.getElementById("pName").innerText = product.name;
+document.getElementById("pPrice").innerText = "$"+product.price;
+
+/* ===== THUMBNAIL (SINGLE IMAGE) ===== */
+const thumbsDiv = document.getElementById("thumbs");
+let thumbImg = document.createElement("img");
+thumbImg.src = product.img;
+thumbImg.onclick = () => document.getElementById("mainImg").src = product.img;
+thumbsDiv.appendChild(thumbImg);
+
+
+/* CART */
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+function addCart(){cart.push(product);localStorage.setItem("cart",JSON.stringify(cart));alert("Added To Cart!");}
+function buyNow(){localStorage.setItem("cart",JSON.stringify([product]));location.href="checkout.html";}
+
+
+function buyNow(){
+    localStorage.setItem("cart", JSON.stringify([product]));  // single item checkout
+    window.location.href = "payment.html"; // Payment page open ✔
+}
+
+</script>
+</body>
+</html>

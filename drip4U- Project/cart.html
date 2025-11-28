@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>Cart</title><link rel="stylesheet" href="style.css"></head>
+<body>
+
+<h2 style="text-align:center;margin:30px 0;">🛒 Your Cart</h2>
+<div class="cartItems" id="cartBox"></div>
+<h2 style="text-align:center">Total: $<span id="total"></span></h2>
+<div style="text-align:center;margin-top:15px;">
+  <!-- <button class="btn" onclick="location.href='checkout.html'">Checkout →</button> -->
+</div>
+
+<script>
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+let box=document.getElementById("cartBox");let total=0;
+cart.forEach(p=>{
+  box.innerHTML+=`<div style="background:#fff;padding:14px;border:1px solid #ddd;margin:10px;width:60%;margin:auto;border-radius:10px">
+  <img src="${p.img}" style="width:90px;border-radius:6px;margin-right:10px">
+  <b>${p.name}</b> — $${p.price}</div>`;
+ total+=p.price;
+});
+document.getElementById("total").innerText=total;
+</script>
+
+</body>
+</html>
